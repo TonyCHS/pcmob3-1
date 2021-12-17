@@ -1,11 +1,11 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
+import { Dimensions } from "react-native";
 import { StyleSheet, Text, Button, View, FlatList, Image } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import BlockRGB from "./components/BlockRGB";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { List } from "react-native-paper";
 
 function HomeScreen({ navigation }) {
   // Initial value is an array of objects
@@ -72,7 +72,12 @@ function HomeScreen({ navigation }) {
         <Text style={{ color: "blue" }}>Reset colour</Text>
       </TouchableOpacity> */}
 
-      <FlatList style={styles.list} data={colorArray} renderItem={renderItem} />
+      <FlatList
+        style={styles.list}
+        data={colorArray}
+        renderItem={renderItem}
+        numColumns={4}
+      />
     </View>
   );
 }
@@ -114,14 +119,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center",
+    // alignItems: "center",
     justifyContent: "center",
   },
   list: {
-    width: "100%",
+    // height: 100,
+    // width: 100,
   },
   detailText: {
     fontSize: 24,
     marginBottom: 20,
+    alignItems: "center",
   },
 });
