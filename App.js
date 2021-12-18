@@ -42,6 +42,7 @@ function HomeScreen({ navigation }) {
         // e.g. Math.random() give a value from 0 to 1 i.e. 0.8, 0.4
         // 0.4 * 256 = 12.8
         // Math.floor(12.8) = 12
+
         red: Math.floor(Math.random() * 256),
         green: Math.floor(Math.random() * 256),
         blue: Math.floor(Math.random() * 256),
@@ -86,20 +87,47 @@ function DetailsScreen({ route }) {
   // Destructure this object so we don't have to type route.params.red etc
   const { red, green, blue } = route.params;
 
-  return (
-    <View
-      style={[
-        styles.container,
-        { backgroundColor: `rgb(${red}, ${green}, ${blue})` },
-      ]}
-    >
-      <View style={{ padding: 30 }}>
-        <Text style={styles.detailText}>Red: {red}</Text>
-        <Text style={styles.detailText}>Green: {green}</Text>
-        <Text style={styles.detailText}>Blue: {blue}</Text>
+  // To change colour of the text from black to white use
+  //if (red*0.299 + green*0.587 + blue*0.114) > 186 use #000000 (black) else use #ffffff (white)
+  // console.log(red * 0.299 + green * 0.587 + blue * 0.114);
+
+  const colourCheck = red * 0.299 + green * 0.587 + blue * 0.114;
+  // console.log(red);
+  // console.log(green);
+  // console.log(blue);
+  // console.log(colourCheck);
+
+  if (colourCheck > 186) {
+    return (
+      <View
+        style={[
+          styles.container,
+          { backgroundColor: `rgb(${red}, ${green}, ${blue})` },
+        ]}
+      >
+        <View style={{ padding: 30 }}>
+          <Text style={styles.detailTextBlack}>Red: {red}</Text>
+          <Text style={styles.detailTextBlack}>Green: {green}</Text>
+          <Text style={styles.detailTextBlack}>Blue: {blue}</Text>
+        </View>
       </View>
-    </View>
-  );
+    );
+  } else if (colourCheck < 186) {
+    return (
+      <View
+        style={[
+          styles.container,
+          { backgroundColor: `rgb(${red}, ${green}, ${blue})` },
+        ]}
+      >
+        <View style={{ padding: 30 }}>
+          <Text style={styles.detailTextWhite}>Red: {red}</Text>
+          <Text style={styles.detailTextWhite}>Green: {green}</Text>
+          <Text style={styles.detailTextWhite}>Blue: {blue}</Text>
+        </View>
+      </View>
+    );
+  }
 }
 
 const Stack = createStackNavigator();
@@ -119,16 +147,22 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    // alignItems: "center",
     justifyContent: "center",
   },
-  list: {
-    // height: 100,
-    // width: 100,
-  },
-  detailText: {
-    fontSize: 24,
+  detailTextWhite: {
+    flexDirection: "row",
+    fontSize: 50,
     marginBottom: 20,
     alignItems: "center",
+    justifyContent: "center",
+    color: "#ffffff",
+  },
+  detailTextBlack: {
+    flexDirection: "row",
+    fontSize: 50,
+    marginBottom: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    color: "#000000",
   },
 });
